@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+
+    <color name="primary">#24CAB5</color>
+    <color name="primary_light">#EEF2FF</color>
+    <color name="primary_light_alpha">#183ACCA1</color>
+    <color name="cyan_bg_light">#54C4D1</color>
+    <color name="background">#FFFFFF</color>
+    <color name="surface_gray">#F9FAFB</color>
+    <color name="text_primary">#111827</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="destructive">#EF4444</color>
+    <color name="destructive_bg">#FEF2F2</color>
+    <color name="destructive_bg_light">#FEF2F2</color>
+    <color name="border">#E5E7EB</color>
+
+    <color name="accent">#FFC107</color>
+    <color name="secondary_light">#E8F5E9</color>
+
+</resources>
