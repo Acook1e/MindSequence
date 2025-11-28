@@ -117,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
         } else if ("focus_page".equals(pageId)) {
             Intent intent = new Intent(this, FocusPomodoroActivity.class);
             startActivity(intent);
+        }  else if ("sleep_page".equals(pageId)) {
+            Intent intent = new Intent(this, SleepGuidanceWelcomeActivity.class);
+            startActivity(intent);
         } else {
             // 对于未实现的页面，显示 Toast 提示
             String pageTitle = pageNameMap.get(pageId);

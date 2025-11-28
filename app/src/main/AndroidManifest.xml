@@ -41,6 +41,21 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".SleepGuidanceWelcomeActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".SleepGuideSelectionActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".SleepGuidedSessionActivity"
+            android:exported="true">
+        </activity>
+
 
     </application>
 
