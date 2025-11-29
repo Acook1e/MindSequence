@@ -33,6 +33,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+
+    lintOptions {
+        checkReleaseBuilds true
+        abortOnError false
+        // 启用未使用资源检查
+        checkOnly 'UnusedResources'
+    }
 }
 
 dependencies {

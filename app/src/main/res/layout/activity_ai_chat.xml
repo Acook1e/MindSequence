@@ -1,38 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1E293B">
+    android:background="#F8FAFC"
+    tools:context=".AIChatActivity">
 
-    <!-- 顶部标题栏 -->
-    <LinearLayout
-        android:id="@+id/ll_title"
+    <!-- 通用头部 -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/view_common_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AI Empathetic Partner"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Share your thoughts and feelings"
-            android:textColor="#CBD5E1"
-            android:textSize="12sp" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- 聊天消息列表 -->
     <androidx.recyclerview.widget.RecyclerView
@@ -41,53 +23,70 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:padding="16dp"
-        android:scrollbarThumbVertical="@drawable/scrollbar_thumb_sci_fi"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@id/ll_input"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_title" />
+        android:background="#F8FAFC"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintBottom_toTopOf="@id/ll_input_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- 底部输入区域（移除紫色头像，强化发送按钮） -->
+    <!-- 底部输入区域 -->
     <LinearLayout
-        android:id="@+id/ll_input"
+        android:id="@+id/ll_input_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#273449"
-        android:orientation="horizontal"
-        android:padding="12dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- 输入框（优化回车发送逻辑） -->
-        <EditText
-            android:id="@+id/et_message"
-            android:layout_width="0dp"
+        <!-- 输入框和发送按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/shape_input_sci_fi"
-            android:hint="Type your message here... (Shift+Enter for new line)"
-            android:imeOptions="actionSend"
-            android:inputType="textMultiLine|textCapSentences"
-            android:maxLines="5"
-            android:padding="12dp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#94A3B8"
-        android:imeActionId="@+id/send"
-        android:imeActionLabel="Send"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="56dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/shape_send_btn_sci_fi"
-            android:minWidth="56dp"
-            android:text="✈️"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:padding="0dp"/>
+            <!-- 输入框 -->
+            <EditText
+                android:id="@+id/et_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input_rounded"
+                android:hint="Type your message here... (Shift+Enter for new line)"
+                android:imeOptions="actionSend"
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLines="4"
+                android:padding="16dp"
+                android:textColor="#1E293B"
+                android:textColorHint="#94A3B8"
+                android:textSize="14sp" />
+
+            <!-- 发送按钮 -->
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="56dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_send_button"
+                android:src="@drawable/ic_send"
+                app:tint="#FFFFFF"
+                android:scaleType="center"
+                android:contentDescription="发送消息" />
+
+        </LinearLayout>
+
+        <!-- 隐私提示 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="Your conversations are private and secure"
+            android:textColor="#64748B"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
