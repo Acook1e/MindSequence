@@ -3,6 +3,7 @@
     <color name="white">#FFFFFF</color>
 
     <color name="primary">#24CAB5</color>
+    <color name="primary_light">#0C6B71</color>
     <color name="primary_light_alpha">#183ACCA1</color>
     <color name="cyan_bg_light">#54C4D1</color>
     <color name="background">#FFFFFF</color>

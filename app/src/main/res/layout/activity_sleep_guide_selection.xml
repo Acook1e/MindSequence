@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_gray"
+    tools:context=".SleepGuideSelectionActivity">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/view_common_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Title Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="32dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select Your Sleep Guide"
+                    android:textColor="@color/text_primary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Choose a guided meditation tailored to your needs for a restful night"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <!-- First Row of Cards -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:weightSum="2">
+
+                <!-- Dorm Noise Adaptation Mode -->
+                <LinearLayout
+                    android:id="@+id/card_dorm_noise"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card_outlined_soft"
+                    android:padding="16dp">
+
+                    <!-- Icon and Duration Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_volume_x"
+                            app:tint="@color/primary"
+                            android:background="@drawable/bg_circle_primary_light"
+                            android:padding="12dp"
+                            android:contentDescription="Volume X Icon"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="20 min"
+                            android:textColor="@color/primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_pill_primary_light"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            android:gravity="center"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Dorm Noise Adaptation Mode"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
+
+                    <!-- Description -->
+                    <TextView
+                        android:id="@+id/desc_dorm_noise"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Guided meditation focused on accepting and filtering ambient sounds for a restful sleep."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:maxLines="4"
+                        android:ellipsize="end"/>
+
+                    <!-- Button -->
+                    <Button
+                        android:id="@+id/btn_dorm_noise"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Start Guide"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp"/>
+                </LinearLayout>
+
+                <!-- Pre-Exam Night Relaxation Guide -->
+                <LinearLayout
+                    android:id="@+id/card_pre_exam"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card_outlined_soft"
+                    android:padding="16dp">
+
+                    <!-- Icon and Duration Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_book_open"
+                            app:tint="@color/primary"
+                            android:background="@drawable/bg_circle_primary_light"
+                            android:padding="12dp"
+                            android:contentDescription="Book Open Icon"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="15 min"
+                            android:textColor="@color/primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_pill_primary_light"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            android:gravity="center"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pre-Exam Night Relaxation Guide"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
+
+                    <!-- Description -->
+                    <TextView
+                        android:id="@+id/desc_pre_exam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Soothe study stress and calm racing thoughts before an important test."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:maxLines="4"
+                        android:ellipsize="end"/>
+
+                    <!-- Button -->
+                    <Button
+                        android:id="@+id/btn_pre_exam"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Start Guide"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Second Row of Cards -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Mind Wandering Specific Meditation -->
+                <LinearLayout
+                    android:id="@+id/card_mind_wandering"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card_outlined_soft"
+                    android:padding="16dp">
+
+                    <!-- Icon and Duration Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_cloud_drizzle"
+                            app:tint="@color/primary"
+                            android:background="@drawable/bg_circle_primary_light"
+                            android:padding="12dp"
+                            android:contentDescription="Cloud Drizzle Icon"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="30 min"
+                            android:textColor="@color/primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_pill_primary_light"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            android:gravity="center"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mind Wandering Specific Meditation"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
+
+                    <!-- Description -->
+                    <TextView
+                        android:id="@+id/desc_mind_wandering"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gently bring back awareness when your thoughts are overwhelming and scattered."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:maxLines="4"
+                        android:ellipsize="end"/>
+
+                    <!-- Button -->
+                    <Button
+                        android:id="@+id/btn_mind_wandering"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Start Guide"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp"/>
+                </LinearLayout>
+
+                <!-- Quick 10-Minute Wind Down -->
+                <LinearLayout
+                    android:id="@+id/card_quick_wind_down"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_card_outlined_soft"
+                    android:padding="16dp">
+
+                    <!-- Icon and Duration Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <ImageView
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:src="@drawable/ic_moon_star"
+                            app:tint="@color/primary"
+                            android:background="@drawable/bg_circle_primary_light"
+                            android:padding="12dp"
+                            android:contentDescription="Moon Star Icon"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="10 min"
+                            android:textColor="@color/primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_pill_primary_light"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="4dp"
+                            android:gravity="center"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Title -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Quick 10-Minute Wind Down"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="2"
+                        android:ellipsize="end"/>
+
+                    <!-- Description -->
+                    <TextView
+                        android:id="@+id/desc_quick_wind_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="A short, essential guided reflection to prepare the body and mind for rest."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp"
+                        android:layout_marginBottom="16dp"
+                        android:maxLines="4"
+                        android:ellipsize="end"/>
+
+                    <!-- Button -->
+                    <Button
+                        android:id="@+id/btn_quick_wind_down"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:text="Start Guide"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:cornerRadius="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Tip Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="32dp"
+                android:padding="16dp"
+                android:background="@drawable/bg_secondary_message_box">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡 Tip"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Each guide is designed for different situations. Try different sessions to find what works best for you. You can pause or end any session at any time."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="4dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
