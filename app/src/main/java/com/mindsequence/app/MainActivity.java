@@ -111,11 +111,15 @@ public class MainActivity extends AppCompatActivity {
     private void navigateTo(String pageId) {
         // 根据 pageId 执行具体的跳转逻辑
         if ("anchor_page".equals(pageId)) {
-            // *** 新增：跳转到 Mind Anchor Page ***
+            // 跳转到 Mind Anchor Page
             Intent intent = new Intent(this, MindAnchorActivity.class);
             startActivity(intent);
         } else if ("focus_page".equals(pageId)) {
             Intent intent = new Intent(this, FocusPomodoroActivity.class);
+            startActivity(intent);
+        } else if ("ai_page".equals(pageId)) { // 新增：AI Partner 跳转逻辑
+            // 跳转到 AI 聊天页面（AIChatActivity）
+            Intent intent = new Intent(this, AIChatActivity.class);
             startActivity(intent);
         } else {
             // 对于未实现的页面，显示 Toast 提示

@@ -34,9 +34,7 @@ public class FocusPomodoroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 使用新创建的布局
-        setContentView(R.layout.activity_pomodoro_focus);
-
-        if (getSupportActionBar() != null) {
+        setContentView(R.layout.activity_pomodoro_focus);        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
