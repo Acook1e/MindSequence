@@ -103,8 +103,6 @@ public class FocusPomodoroActivity extends AppCompatActivity {
                 isTimerRunning = false;
                 btnStartFocus.setText("Start Focus");
                 timerDisplay.setText("00:00");
-                // TODO: 计时器完成后的逻辑 (例如开始休息)
-                Toast.makeText(FocusPomodoroActivity.this, "Focus session finished! Time for a break.", Toast.LENGTH_LONG).show();
             }
         }.start();
 
@@ -136,10 +134,6 @@ public class FocusPomodoroActivity extends AppCompatActivity {
         if (countDownTimer != null && isTimerRunning) {
             countDownTimer.cancel();
         }
-        // TODO: 结束会话并记录数据
-
-        // 仿照 MainActivity.java 中的逻辑，使用 Toast 提示
-        Toast.makeText(this, "Focus session ended and results recorded.", Toast.LENGTH_SHORT).show();
 
         // 返回主页
         Intent intent = new Intent(this, MainActivity.class);
@@ -176,8 +170,7 @@ public class FocusPomodoroActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if (countDownTimer != null && isTimerRunning) {
-            // 确保当 Activity 不可见时，计时器继续运行
-            // 如果需要完全停止计时器，可以改为 countDownTimer.cancel();
+            countDownTimer.cancel();
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.mindsequence.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,6 +45,7 @@ public class AIChatActivity extends AppCompatActivity {
     private ImageButton btnSend;
     private OkHttpClient mOkHttpClient;
     private Gson mGson;
+    private Executor mExecutor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class AIChatActivity extends AppCompatActivity {
                 .build();
         mGson = new Gson();
         mMessageList = new ArrayList<>();
+        mExecutor = Executors.newSingleThreadExecutor(); // 创建单线程执行器
 
         setupHeader(); // 设置头部
         bindViews();
@@ -80,12 +85,31 @@ public class AIChatActivity extends AppCompatActivity {
             headerMessage.setText("AI Empathetic Partner");
         }
 
-        // 设置返回按钮
+        // 设置返回按钮 - 修改为返回主页
         ImageButton backButton = headerView.findViewById(R.id.btn_back);
         if (backButton != null) {
             backButton.setVisibility(View.VISIBLE);
-            backButton.setOnClickListener(v -> onBackPressed());
+            // 修改返回按钮逻辑：返回主页
+            backButton.setOnClickListener(v -> returnToMainActivity());
         }
+    }
+
+    /**
+     * 返回主页的方法
+     */
+    private void returnToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * 重写返回键处理，使其也返回主页
+     */
+    @Override
+    public void onBackPressed() {
+        returnToMainActivity();
     }
 
     private void bindViews() {
@@ -183,77 +207,112 @@ public class AIChatActivity extends AppCompatActivity {
     }
 
     private void callDeepSeekAPI(String userContent, int loadingPos) {
-        DeepSeekRequest requestBody = new DeepSeekRequest();
-        requestBody.setModel("deepseek-chat");
-        List<DeepSeekMessage> messages = new ArrayList<>();
+        // 确保在后台线程执行
+        new Thread(() -> {
+            try {
+                DeepSeekRequest requestBody = new DeepSeekRequest();
+                requestBody.setModel("deepseek-chat");
+                List<DeepSeekMessage> messages = new ArrayList<>();
 
-        // 构建历史消息
-        for (int i = 0; i < mMessageList.size() - 1; i++) {
-            Message msg = mMessageList.get(i);
-            String role = msg.getType() == Message.TYPE_USER ? "user" : "assistant";
-            messages.add(new DeepSeekMessage(role, msg.getContent()));
-        }
-        requestBody.setMessages(messages);
-        requestBody.setTemperature(0.9);
-        requestBody.setMaxTokens(2048);
+                // 构建历史消息
+                for (int i = 0; i < mMessageList.size() - 1; i++) {
+                    Message msg = mMessageList.get(i);
+                    String role = msg.getType() == Message.TYPE_USER ? "user" : "assistant";
+                    messages.add(new DeepSeekMessage(role, msg.getContent()));
+                }
 
-        String jsonBody = mGson.toJson(requestBody);
-        RequestBody body = RequestBody.create(
-                MediaType.parse("application/json; charset=utf-8"),
-                jsonBody
-        );
+                requestBody.setMessages(messages);
+                requestBody.setTemperature(0.9);
+                requestBody.setMaxTokens(2048);
 
-        Request request = new Request.Builder()
-                .url(DEEPSEEK_API_URL)
-                .addHeader("Authorization", "Bearer " + DEEPSEEK_API_KEY)
-                .addHeader("Content-Type", "application/json")
-                .post(body)
-                .build();
+                String jsonBody = mGson.toJson(requestBody);
+                RequestBody body = RequestBody.create(
+                        MediaType.parse("application/json; charset=utf-8"),
+                        jsonBody
+                );
 
-        mOkHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+                Request request = new Request.Builder()
+                        .url(DEEPSEEK_API_URL)
+                        .addHeader("Authorization", "Bearer " + DEEPSEEK_API_KEY)
+                        .addHeader("Content-Type", "application/json")
+                        .post(body)
+                        .build();
+
+                // 在后台线程执行同步请求
+                Response response = mOkHttpClient.newCall(request).execute();
+
+                // 处理响应（仍在后台线程）
+                String responseStr = null;
+                try {
+                    if (response.isSuccessful() && response.body() != null) {
+                        responseStr = response.body().string();
+                        System.out.println("API Response: " + responseStr);
+
+                        final DeepSeekResponse deepSeekResponse = mGson.fromJson(responseStr, DeepSeekResponse.class);
+                        final String aiReply;
+
+                        if (deepSeekResponse != null &&
+                                deepSeekResponse.getChoices() != null &&
+                                !deepSeekResponse.getChoices().isEmpty() &&
+                                deepSeekResponse.getChoices().get(0) != null &&
+                                deepSeekResponse.getChoices().get(0).getMessage() != null) {
+
+                            aiReply = deepSeekResponse.getChoices().get(0).getMessage().getContent();
+                        } else {
+                            throw new Exception("API响应格式不正确");
+                        }
+
+                        // 回到主线程更新UI
+                        runOnUiThread(() -> {
+                            removeLoadingMessage(loadingPos);
+                            if (aiReply != null && !aiReply.trim().isEmpty()) {
+                                mMessageList.add(new Message(aiReply.trim(), Message.TYPE_AI, getCurrentTimestamp()));
+                                mAdapter.notifyItemInserted(mMessageList.size() - 1);
+                                scrollToBottom();
+                            } else {
+                                try {
+                                    throw new Exception("AI回复内容为空");
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+
+                    } else {
+                        final String errorMsg = "请求失败: " + response.code();
+                        runOnUiThread(() -> {
+                            removeLoadingMessage(loadingPos);
+                            mMessageList.add(new Message(errorMsg, Message.TYPE_AI, getCurrentTimestamp()));
+                            mAdapter.notifyItemInserted(mMessageList.size() - 1);
+                            scrollToBottom();
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    final String finalErrorMsg = "回复解析失败: " + e.getMessage();
+                    runOnUiThread(() -> {
+                        removeLoadingMessage(loadingPos);
+                        mMessageList.add(new Message(finalErrorMsg, Message.TYPE_AI, getCurrentTimestamp()));
+                        mAdapter.notifyItemInserted(mMessageList.size() - 1);
+                        scrollToBottom();
+                    });
+                } finally {
+                    if (response != null && response.body() != null) {
+                        response.body().close(); // 防止连接泄漏
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
                 runOnUiThread(() -> {
                     removeLoadingMessage(loadingPos);
-                    mMessageList.add(new Message("网络请求失败，请重试", Message.TYPE_AI, getCurrentTimestamp()));
+                    String errorMsg = "网络请求失败: " + e.getMessage();
+                    mMessageList.add(new Message(errorMsg, Message.TYPE_AI, getCurrentTimestamp()));
                     mAdapter.notifyItemInserted(mMessageList.size() - 1);
                     scrollToBottom();
                 });
             }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                runOnUiThread(() -> {
-                    removeLoadingMessage(loadingPos);
-
-                    if (response.isSuccessful() && response.body() != null) {
-                        try {
-                            String responseStr = response.body().string();
-                            DeepSeekResponse deepSeekResponse = mGson.fromJson(responseStr, DeepSeekResponse.class);
-
-                            if (deepSeekResponse != null && deepSeekResponse.getChoices() != null &&
-                                    !deepSeekResponse.getChoices().isEmpty()) {
-                                String aiReply = deepSeekResponse.getChoices().get(0).getMessage().getContent();
-                                mMessageList.add(new Message(aiReply, Message.TYPE_AI, getCurrentTimestamp()));
-                                mAdapter.notifyItemInserted(mMessageList.size() - 1);
-                                scrollToBottom();
-                            } else {
-                                throw new Exception("AI回复为空");
-                            }
-                        } catch (Exception e) {
-                            mMessageList.add(new Message("回复解析失败", Message.TYPE_AI, getCurrentTimestamp()));
-                            mAdapter.notifyItemInserted(mMessageList.size() - 1);
-                            scrollToBottom();
-                        }
-                    } else {
-                        String errorMsg = "请求失败: " + response.code();
-                        mMessageList.add(new Message(errorMsg, Message.TYPE_AI, getCurrentTimestamp()));
-                        mAdapter.notifyItemInserted(mMessageList.size() - 1);
-                        scrollToBottom();
-                    }
-                });
-            }
-        });
+        }).start();
     }
 
     private void removeLoadingMessage(int loadingPos) {
@@ -305,10 +364,19 @@ public class AIChatActivity extends AppCompatActivity {
     static class DeepSeekResponse {
         private List<Choice> choices;
         public List<Choice> getChoices() { return choices; }
+        public void setChoices(List<Choice> choices) { this.choices = choices; }
 
         static class Choice {
+            private int index;
             private DeepSeekMessage message;
+            private String finish_reason;
+
             public DeepSeekMessage getMessage() { return message; }
+            public void setMessage(DeepSeekMessage message) { this.message = message; }
+            public int getIndex() { return index; }
+            public void setIndex(int index) { this.index = index; }
+            public String getFinish_reason() { return finish_reason; }
+            public void setFinish_reason(String finish_reason) { this.finish_reason = finish_reason; }
         }
     }
 }

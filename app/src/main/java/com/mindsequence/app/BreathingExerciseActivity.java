@@ -351,7 +351,6 @@ public class BreathingExerciseActivity extends AppCompatActivity {
     }
 
     private void onExerciseFinished() {
-        Toast.makeText(this, "Breathing Exercise Finished!", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MindAnchorActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);

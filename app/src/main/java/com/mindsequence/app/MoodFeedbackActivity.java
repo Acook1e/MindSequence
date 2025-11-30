@@ -1,5 +1,6 @@
 package com.mindsequence.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -105,13 +106,10 @@ public class MoodFeedbackActivity extends AppCompatActivity {
     private void navigateToMainPage() {
         stopAutoReturnTimer();
         // 实际应用中：
-        // Intent intent = new Intent(this, MainActivity.class);
-        // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        // startActivity(intent);
-        // finish();
-        Toast.makeText(this, "Auto-returned to Main Page", Toast.LENGTH_SHORT).show();
-        // 为了演示，这里直接关闭当前页面
-        finish();
+         Intent intent = new Intent(this, MainActivity.class);
+         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+         startActivity(intent);
+         finish();
     }
 
     @Override
