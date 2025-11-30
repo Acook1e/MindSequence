@@ -50,6 +50,11 @@
         </activity>
 
         <activity
+            android:name=".VirtualPetActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
             android:name=".SleepGuidanceWelcomeActivity"
             android:exported="true">
         </activity>

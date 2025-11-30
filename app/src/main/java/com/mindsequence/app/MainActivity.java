@@ -121,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
             // 跳转到 AI 聊天页面（AIChatActivity）
             Intent intent = new Intent(this, AIChatActivity.class);
             startActivity(intent);
+        } else if ("pet_page".equals(pageId)) {
+            Intent intent = new Intent(this, VirtualPetActivity.class);
+            startActivity(intent);
         }  else if ("sleep_page".equals(pageId)) {
             Intent intent = new Intent(this, SleepGuidanceWelcomeActivity.class);
             startActivity(intent);

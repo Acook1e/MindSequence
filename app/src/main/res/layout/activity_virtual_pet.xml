@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface_gray"
+    tools:context=".VirtualPetActivity">
+
+    <!-- 通用头部 -->
+    <include
+        android:id="@+id/header"
+        layout="@layout/view_common_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 主要内容区域 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:gravity="center_horizontal">
+
+            <!-- 宠物显示区域 -->
+            <FrameLayout
+                android:id="@+id/pet_display_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_info_box"
+                android:padding="24dp"
+                android:layout_marginBottom="16dp"
+                android:maxWidth="400dp">
+
+                <!-- 宠物动画容器 -->
+                <FrameLayout
+                    android:id="@+id/pet_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:background="@drawable/bg_pet_container"
+                    android:padding="16dp">
+
+                    <!-- 宠物ImageView - 用于显示和动画 -->
+                    <ImageView
+                        android:id="@+id/pet_image"
+                        android:layout_width="400dp"
+                        android:layout_height="400dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_pet"
+                        android:contentDescription="Virtual pet Misty" />
+
+                    <!-- 交互效果容器 - 用于动态添加点击气泡 -->
+                    <FrameLayout
+                        android:id="@+id/effect_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </FrameLayout>
+
+                <!-- 宠物信息 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginTop="420dp">
+
+                    <TextView
+                        android:id="@+id/pet_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Misty"
+                        android:textColor="@color/text_primary"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/pet_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="A calm, cloud-like kitten"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp" />
+
+                    <!-- 宠物对话气泡 -->
+                    <LinearLayout
+                        android:id="@+id/speech_bubble"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/surface_gray"
+                        android:padding="16dp"
+                        android:layout_marginTop="12dp"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/pet_speech"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hello! I'm Misty, always here to listen."
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <!-- 提示文本 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="24dp"
+                android:maxWidth="400dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tap the button below to interact with Misty"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <!-- 互动按钮 -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_interact"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Pet Companion"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/white"
+                android:maxWidth="400dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- 返回按钮 -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_back_main"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Back to Main Page"
+                android:textSize="16sp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:backgroundTint="@color/background"
+                android:textColor="@color/primary"
+                app:strokeColor="@color/primary"
+                android:maxWidth="400dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
